@@ -7,7 +7,7 @@ import http from 'q-io/http';
 import debug from 'debug';
 
 import config from '../config/index';
-import {serializeParams, toJSON, toLog} from '../utils/index';
+import {serializeParams, toJSON, toLog, verboseIOError} from '../utils/index';
 
 const log = debug('token');
 
@@ -15,6 +15,7 @@ const log = debug('token');
  * @param {String} code
  * @param {String} clientId
  * @param {String} clientSecret
+ * @returns {Promise<Object>}
  */
 export function getToken(code, clientId, clientSecret) {
     const body = serializeParams({
@@ -34,7 +35,8 @@ export function getToken(code, clientId, clientSecret) {
         body: [body]
     })
     .then(toLog(log, 'getToken'))
-    .then(toJSON);
+    .then(toJSON)
+    .catch(verboseIOError(log));
 }
 
 /**
@@ -52,10 +54,14 @@ export function refreshToken(rt, clientId, clientSecret) {
         refresh_token: rt
     });
     return http.read({
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         method: 'POST',
         url: config.ACCOUNTS_URL,
         body: [body]
     })
     .then(toLog(log, 'refreshToken'))
-    .then(toJSON);
+    .then(toJSON)
+    .catch(verboseIOError(log));
 }
