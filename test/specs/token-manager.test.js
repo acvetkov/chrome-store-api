@@ -4,6 +4,7 @@
  */
 
 import nock from 'nock';
+import Promise from 'bluebird';
 
 import TokenManager from '../../src/token/index';
 import FakeStorage from '../lib/fake-storage';
@@ -26,13 +27,17 @@ const GET_BODY = {
 };
 
 const REFRESH_BODY = {
-    client_id: 'clientId',
-    client_secret: 'clientSecret',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
     grant_type: 'refresh_token',
     refresh_token: 'refreshToken'
 };
 
 describe('TokenManager', function () {
+
+    beforeEach(function () {
+        nock.cleanAll();
+    });
 
     describe('get', function () {
 
@@ -121,6 +126,46 @@ describe('TokenManager', function () {
                             });
                     });
             });
+        });
+    });
+
+    describe('refresh', function () {
+
+        beforeEach(function () {
+            this.manager = new TokenManager(CODE, CLIENT_ID, CLIENT_SECRET);
+        });
+
+        it('should refresh token', function () {
+            nock('https://accounts.google.com')
+                .post('/o/oauth2/token', GET_BODY)
+                .reply(200, {
+                    access_token: '1',
+                    refresh_token: 'refreshToken'
+                });
+
+            nock('https://accounts.google.com')
+                .post('/o/oauth2/token', REFRESH_BODY)
+                .reply(200, {
+                    access_token: '5',
+                    refresh_token: '6'
+                });
+
+            return this.manager.get()
+                .then(token => {
+                    assert.equal(token, '1');
+                })
+                .then(() => {
+                    return this.manager.refresh();
+                })
+                .then(token => {
+                    assert.equal(token, '5', 'should return refreshed token');
+                })
+                .then(() => {
+                    return this.manager.get();
+                })
+                .then(token => {
+                    assert.equal(token, '5', 'should return cached token');
+                });
         });
     });
 });
