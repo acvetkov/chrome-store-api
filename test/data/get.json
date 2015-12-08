@@ -1,0 +1,13 @@
+{
+  "error": {
+    "status": 404,
+    "response": "Not Found"
+  },
+  "ok": {
+    "kind": "chromewebstore#item",
+    "id": "gilhbeiaolmmgadckeojbjjighoakdij",
+    "publicKey": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnLFWGaYcWMCN5hXYGNWPYV6RnFXGml0zWERW238gPvHlS6raadfjSG36IPB4nNGYNS4k5bCjIfoLuI1vz1vpeIzKlu2kZ5rN6hc5AMVsBFhWx+CTo1Iy9Je+wyXKIpaUf2P46Zfi7Yq1HboNMLucjvbdGbFcvQ994pt6ju+dlfQ3c3FIEuvDrKl+raXG4yQITcWofot1Xgy28iLhYZ0kXxdMenE7f2I6iQ2HM9qz+KI98/ms4besZpt/B4me0TiRvzlShL9bXRiMNBPhJ8UKnyZW107LMzph9SMTX5ke+nDiHueH2Jhm4ZW20HpLqIaHWB1Zc56P354XQVp2ZVl0gQIDAQAB-----END PUBLIC KEY-----",
+    "uploadState": "SUCCESS",
+    "itemError": []
+  }
+}

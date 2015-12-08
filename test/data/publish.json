@@ -1,0 +1,28 @@
+{
+  "ok": {
+    "kind": "chromewebstore#item",
+    "item_id": "gilhbeiaolmmgadckeojbjjighoakdij",
+    "status": [
+      "OK"
+    ],
+    "statusDetail": [
+      "OK."
+    ]
+  },
+  "error": {
+    "status": 400,
+    "response": {
+      "error": {
+        "errors": [
+          {
+            "domain": "global",
+            "reason": "badRequest",
+            "message": "Publish condition not met: Language is not selected.; Please select a Primary Category for your item."
+          }
+        ],
+        "code": 400,
+        "message": "Publish condition not met: Language is not selected.; Please select a Primary Category for your item."
+      }
+    }
+  }
+}
