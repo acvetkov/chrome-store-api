@@ -4,12 +4,11 @@
  */
 
 import http from 'q-io/http';
-import Promise from 'bluebird';
 import debug from 'debug';
 import _ from 'lodash';
 
 import config from '../config/index';
-import {toJSON, toLog} from '../utils/index';
+import {toJSON, toLog, verboseIOError} from '../utils/index';
 
 const log = debug('webstore:items');
 
@@ -28,7 +27,7 @@ export function get(token, itemId) {
     })
     .then(toLog(log, 'get'))
     .then(toJSON)
-    .catch(verboseIOError);
+    .catch(verboseIOError(log));
 }
 
 /**
@@ -47,7 +46,7 @@ export function insert(token, fileContent) {
     })
     .then(toLog(log, 'insert'))
     .then(toJSON)
-    .catch(verboseIOError);
+    .catch(verboseIOError(log));
 }
 
 /**
@@ -67,7 +66,7 @@ export function update(token, itemId, fileContent) {
     })
     .then(toLog(log, 'update'))
     .then(toJSON)
-    .catch(verboseIOError);
+    .catch(verboseIOError(log));
 }
 
 /**
@@ -85,7 +84,7 @@ export function publish(token, itemId) {
     })
     .then(toLog(log, 'publish'))
     .then(toJSON)
-    .catch(verboseIOError);
+    .catch(verboseIOError(log));
 }
 
 /**
@@ -98,32 +97,4 @@ function getHeaders(token) {
         Authorization: `Bearer ${token}`,
         'x-goog-api-version': 2
     };
-}
-
-/**
- * Verbose io error and append it it log
- * @param {Object} response
- * @returns {Promise<Object>}
- */
-function verboseIOError({response}) {
-    return verbose(response)
-        .then(toLog(log, 'error'));
-}
-
-/**
- * Verbose io error
- * @param {Object} response
- * @returns {Promise<Object>}
- */
-function verbose(response) {
-    const result = {
-        status: response.status
-    };
-    if (response.body) {
-        return response.body.read()
-            .then(data => _.merge(result, {
-                response: data.toString('utf-8')
-            }));
-    }
-    return Promise.resolve(result);
 }

@@ -4,17 +4,15 @@
  */
 
 import TokenManager from '../token/index';
-import * as api from './items';
+import * as itemsApi from './items';
 
 export default class {
 
     /**
-     * @param {String} code
-     * @param {String} clientId
-     * @param {String} clientSecret
+     * @param {TokenManager} tokenManager
      */
-    constructor (code, clientId, clientSecret) {
-        this.tokenManager = new TokenManager(code, clientId, clientSecret);
+    constructor (tokenManager) {
+        this.tokenManager = tokenManager;
     }
 
     /**
@@ -24,9 +22,7 @@ export default class {
      */
     publish (itemId) {
         return this.tokenManager.get()
-            .then(token => {
-                return api.publish(token, itemId);
-            });
+            .then(token => itemsApi.publish(token, itemId));
     }
 
     /**
@@ -36,9 +32,7 @@ export default class {
      */
     insert (content) {
         return this.tokenManager.get()
-            .then(token => {
-                return api.insert(token, content);
-            });
+            .then(token => itemsApi.insert(token, content));
     }
 
     /**
@@ -49,9 +43,7 @@ export default class {
      */
     update (itemId, content) {
         return this.tokenManager.get()
-            .then(token => {
-                return api.update(token, itemId, content);
-            });
+            .then(token => itemsApi.update(token, itemId, content));
     }
 
     /**
@@ -61,8 +53,6 @@ export default class {
      */
     get (itemId) {
         return this.tokenManager.get()
-            .then(token => {
-                return api.get(token, itemId);
-            });
+            .then(token => itemsApi.get(token, itemId));
     }
 }
