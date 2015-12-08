@@ -4,7 +4,6 @@
  */
 
 import nock from 'nock';
-import Promise from 'bluebird';
 
 import TokenManager from '../../src/token/index';
 import FakeStorage from '../lib/fake-storage';
