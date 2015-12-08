@@ -1,0 +1,16 @@
+{
+  "status": 403,
+  "response": {
+    "error": {
+      "errors": [
+        {
+          "domain": "global",
+          "reason": "forbidden",
+          "message": "Forbidden"
+        }
+      ],
+      "code": 403,
+      "message": "Forbidden"
+    }
+  }
+}
