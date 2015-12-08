@@ -25,8 +25,8 @@
 /**
  * @typedef Object TokenData
  *
- * @property {String} token
- * @property {String} refreshToken
+ * @property {String} access_token
+ * @property {String} refresh_token
  */
 
 /**
