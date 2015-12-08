@@ -5,9 +5,9 @@
   },
   "ok": {
     "kind": "chromewebstore#item",
-    "id": "gilhbeiaolmmgadckeojbjjighoakdij",
-    "publicKey": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnLFWGaYcWMCN5hXYGNWPYV6RnFXGml0zWERW238gPvHlS6raadfjSG36IPB4nNGYNS4k5bCjIfoLuI1vz1vpeIzKlu2kZ5rN6hc5AMVsBFhWx+CTo1Iy9Je+wyXKIpaUf2P46Zfi7Yq1HboNMLucjvbdGbFcvQ994pt6ju+dlfQ3c3FIEuvDrKl+raXG4yQITcWofot1Xgy28iLhYZ0kXxdMenE7f2I6iQ2HM9qz+KI98/ms4besZpt/B4me0TiRvzlShL9bXRiMNBPhJ8UKnyZW107LMzph9SMTX5ke+nDiHueH2Jhm4ZW20HpLqIaHWB1Zc56P354XQVp2ZVl0gQIDAQAB-----END PUBLIC KEY-----",
-    "uploadState": "SUCCESS",
-    "itemError": []
+    "id": "hdfenecdhmohikghkaainloeemamjiml",
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoSBb9vXWVmdfiFC1fLxd\nDCr1wI83muwGF9DhSInBmkEpkMh+kLXLvcxTLcrWQTP/newidE0G9kpyR3ygoyTV\njvv7KT9vSvLLMef2KxqG9RCiKUssXKuZAlFS4NdWHhF/sUeZzNTcxzxp6z8BBX8i\nb/ime0fjnt6s/RViZ8TSmPN7rYpeaDnG4LIIagGV0gHDtqar1e52+sdyMq4Yv0qK\nYXOqIZgtdRGAxkDwMqGqEtJ6H5Bje5qXjxq72/8ZSiqbH9k5G0hKB9OAx2BS6tJS\nQwZMyTGrUkYxJjlYOLYOGt2vM4i5b9SYlWBdrQp2XSMY0xLB1BtnLqmpDRVwSo+e\npQIDAQAB\n-----END PUBLIC KEY-----\n",
+    "uploadState": "NOT_FOUND",
+    "crxVersion": "0.0.10"
   }
 }

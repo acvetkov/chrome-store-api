@@ -21,7 +21,7 @@ const log = debug('webstore:items');
  */
 export function get(token, itemId) {
     return http.read({
-        url: `${config.API_GET_URL}${itemId}`,
+        url: config.API_GET_URL.replace('{itemId}', itemId),
         method: 'GET',
         headers: getHeaders(token)
     })
