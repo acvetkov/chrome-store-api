@@ -11,9 +11,7 @@ import _ from 'lodash';
  * @returns {String}
  */
 export function serializeParams(data) {
-    return _.map(data, (val, key) => {
-        return `${key}=${val}`;
-    }).join('&');
+    return _.map(data, (val, key) => `${key}=${val}`).join('&');
 }
 
 /**
@@ -21,7 +19,7 @@ export function serializeParams(data) {
  * @returns {Object}
  */
 export function toJSON(body) {
-    return JSON.parse(body.toString('utf-8'));
+    return parseJSON(body.toString('utf-8'));
 }
 
 /**
@@ -39,4 +37,45 @@ export function toLog(log, action = '') {
         }
         return data;
     };
+}
+
+/**
+ * Verbose io error and append it it log
+ * @param {Function} log
+ * @returns {Function}
+ */
+export function verboseIOError(log) {
+    return ({response}) => verbose(response)
+        .then(toLog(log));
+}
+
+/**
+ * @param {*} data
+ * @param {*} [defaultValue]
+ * @returns {*}
+ */
+export function parseJSON(data, defaultValue) {
+    try {
+        return JSON.parse(data);
+    } catch (e) {
+        return defaultValue || data;
+    }
+}
+
+/**
+ * Verbose io error
+ * @param {Object} response
+ * @returns {Promise<Object>}
+ */
+function verbose(response) {
+    const result = {
+        status: response.status
+    };
+    if (response.body) {
+        return response.body.read()
+            .then(data => _.merge(result, {
+                response: parseJSON(data.toString('utf-8'))
+            }));
+    }
+    return Promise.resolve(result);
 }
