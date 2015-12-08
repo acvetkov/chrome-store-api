@@ -14,8 +14,10 @@ const CLIENT_ID = 'client_id';
 const CLIENT_SECRET = 'client_secret';
 
 const DATA = {
-    access_token: '1',
-    refresh_token: '2'
+    code: {
+        access_token: '1',
+        refresh_token: '2'
+    }
 };
 
 const GET_BODY = {
@@ -131,41 +133,92 @@ describe('TokenManager', function () {
 
     describe('refresh', function () {
 
-        beforeEach(function () {
-            this.manager = new TokenManager(CODE, CLIENT_ID, CLIENT_SECRET);
+        describe('without storage', function () {
+
+            beforeEach(function () {
+                this.manager = new TokenManager(CODE, CLIENT_ID, CLIENT_SECRET);
+            });
+
+            it('should refresh token', function () {
+                nock('https://accounts.google.com')
+                    .post('/o/oauth2/token', GET_BODY)
+                    .reply(200, {
+                        access_token: '1',
+                        refresh_token: 'refreshToken'
+                    });
+
+                nock('https://accounts.google.com')
+                    .post('/o/oauth2/token', REFRESH_BODY)
+                    .reply(200, {
+                        access_token: '5',
+                        refresh_token: '6'
+                    });
+
+                return this.manager.get()
+                    .then(token => {
+                        assert.equal(token, '1');
+                    })
+                    .then(() => {
+                        return this.manager.refresh();
+                    })
+                    .then(token => {
+                        assert.equal(token, '5', 'should return refreshed token');
+                    })
+                    .then(() => {
+                        return this.manager.get();
+                    })
+                    .then(token => {
+                        assert.equal(token, '5', 'should return cached token');
+                    });
+            });
         });
 
-        it('should refresh token', function () {
-            nock('https://accounts.google.com')
-                .post('/o/oauth2/token', GET_BODY)
-                .reply(200, {
-                    access_token: '1',
-                    refresh_token: 'refreshToken'
-                });
+        describe('with storage', function () {
 
-            nock('https://accounts.google.com')
-                .post('/o/oauth2/token', REFRESH_BODY)
-                .reply(200, {
-                    access_token: '5',
-                    refresh_token: '6'
-                });
+            beforeEach(function () {
+                FakeStorage.data = {};
+                this.manager = new TokenManager(CODE, CLIENT_ID, CLIENT_SECRET, FakeStorage);
+            });
 
-            return this.manager.get()
-                .then(token => {
-                    assert.equal(token, '1');
-                })
-                .then(() => {
-                    return this.manager.refresh();
-                })
-                .then(token => {
-                    assert.equal(token, '5', 'should return refreshed token');
-                })
-                .then(() => {
-                    return this.manager.get();
-                })
-                .then(token => {
-                    assert.equal(token, '5', 'should return cached token');
-                });
+            it('should refresh token', function () {
+                nock('https://accounts.google.com')
+                    .post('/o/oauth2/token', GET_BODY)
+                    .reply(200, {
+                        access_token: '1',
+                        refresh_token: 'refreshToken'
+                    });
+
+                nock('https://accounts.google.com')
+                    .post('/o/oauth2/token', REFRESH_BODY)
+                    .reply(200, {
+                        access_token: '5',
+                        refresh_token: '6'
+                    });
+
+                return this.manager.get()
+                    .then(token => {
+                        assert.equal(token, '1');
+                    })
+                    .then(() => {
+                        return this.manager.refresh();
+                    })
+                    .then(token => {
+                        assert.equal(token, '5', 'should return refreshed token');
+                    })
+                    .then(() => {
+                        return this.manager.get();
+                    })
+                    .then(token => {
+                        assert.equal(token, '5', 'should return cached token');
+                    })
+                    .then(() => {
+                        return assert.eventually.deepEqual(FakeStorage.get(CODE), {
+                            access_token: '5',
+                            refresh_token: 'refreshToken'
+                        }, 'should save to storage refreshed data');
+                    });
+            });
+
         });
     });
 });

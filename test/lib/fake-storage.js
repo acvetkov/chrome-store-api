@@ -18,13 +18,16 @@ var Storage = {
         this._data = value;
     },
 
-    set: function (value) {
-        this.data = value;
+    set: function (code, at, rt) {
+        this._data[code] = {
+            access_token: at,
+            refresh_token: rt
+        };
         return Promise.resolve(this.data);
     },
 
-    get: function () {
-        return Promise.resolve(this.data);
+    get: function (code) {
+        return Promise.resolve(this.data[code]);
     }
 };
 

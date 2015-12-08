@@ -52,10 +52,9 @@ export default class TokenManager {
         if (this.data.refresh_token) {
             return refreshToken(this.data.refresh_token, this.clientId, this.clientSecret)
                 .then(toLog(log, 'refresh'))
-                .then(data => {
-                    this.data = data;
-                    return this.data.access_token;
-                });
+                .then(data => this.data.access_token = data.access_token)
+                .then(() => this._saveToStorage(this.data))
+                .then(() => this.data.access_token);
         }
     }
 

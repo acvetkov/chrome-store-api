@@ -27,6 +27,10 @@ const REFRESH_BODY = {
 
 describe('getToken', function () {
 
+    after(function () {
+        nock.cleanAll();
+    });
+
     it('should return token data', function () {
 
         nock('https://accounts.google.com')
@@ -53,6 +57,10 @@ describe('getToken', function () {
 });
 
 describe('refreshToken', function () {
+
+    after(function () {
+        nock.cleanAll();
+    });
 
     it('should return token data', function () {
         nock('https://accounts.google.com')
