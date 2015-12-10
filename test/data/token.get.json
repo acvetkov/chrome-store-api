@@ -1,0 +1,16 @@
+{
+  "ok": {
+    "access_token": "ya29.RQLq6tgOfG1UQ_gDe0IZNJ3fJiufaPcumcXn8L_qQf5XwOZJl8Zk0VgSan_GcbMFm0Wz",
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "refresh_token": "1/IPM_hwoL8eVDCuNaVh6PZvObENFrMlZsvUZj8JK7Lc0"
+  },
+  "error_request": {
+    "error": "invalid_request",
+    "error_description": "Required parameter is missing: grant_type"
+  },
+  "error_code": {
+    "error": "invalid_grant",
+    "error_description": "Invalid code."
+  }
+}
