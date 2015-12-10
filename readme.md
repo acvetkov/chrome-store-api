@@ -11,14 +11,35 @@ npm install chrome-store-api
 ### usage
 
 ```js
-
-var WebstoreApi = require('chrome-store-api');
+var WebstoreApi = require('chrome-store-api').Webstore;
+var TokenManager = require('chrome-store-api').TokenManager;
 
 var code = 'app-code';
 var clientId = 'your-client-id';
 var clientSecret = 'your-client-secret';
 
-var api = new WebstoreApi(code, clientId, clientSecret);
+var tokenManager = new TokenManager(code, clientId, clientSecret);
+var api = new WebstoreApi(tokenManager);
+```
+
+#### Storage
+
+You can use storage for save token data between sessions.
+
+```js
+var WebstoreApi = require('chrome-store-api').Webstore;
+var TokenManager = require('chrome-store-api').TokenManager;
+var FileStorage = require('chrome-store-api/storage');
+
+var code = 'app-code';
+var clientId = 'your-client-id';
+var clientSecret = 'your-client-secret';
+
+var storage = new FileStorage('data.json');
+
+// you can use every storage module, which implements IStorage interface
+var tokenManager = new TokenManager(code, clientId, clientSecret, storage);
+var api = new WebstoreApi(tokenManager);
 ```
 
 #### get item info
