@@ -62,10 +62,13 @@ describe('TokenManager', function () {
             it('should be rejected with http status', function () {
                 nock('https://accounts.google.com')
                     .post('/o/oauth2/token', GET_BODY)
-                    .reply(400, fixtureTokenGet.error);
+                    .reply(400, fixtureTokenGet.error_code);
 
                 return this.manager.get()
-                    .catch(status => assert.equal(status, 400));
+                    .catch(data => assert.deepEqual(data, {
+                        status: 400,
+                        response: fixtureTokenGet.error_code
+                    }));
             });
 
             it('should get token from cache', function () {
@@ -103,10 +106,13 @@ describe('TokenManager', function () {
             it('should be rejected with http status', function () {
                 nock('https://accounts.google.com')
                     .post('/o/oauth2/token', GET_BODY)
-                    .reply(400, fixtureTokenGet.error);
+                    .reply(400, fixtureTokenGet.error_code);
 
                 return this.manager.get()
-                    .catch(status => assert.equal(status, 400));
+                    .catch(data => assert.deepEqual(data, {
+                        status: 400,
+                        response: fixtureTokenGet.error_code
+                    }));
             });
 
             it('should get token from storage', function () {
@@ -158,7 +164,10 @@ describe('TokenManager', function () {
                 return this.manager.get()
                     .then(token => assert.equal(token, 'ya29.RQLq6tgOfG1UQ_gDe0IZNJ3fJiufaPcumcXn8L_qQf5XwOZJl8Zk0VgSan_GcbMFm0Wz'))
                     .then(() => this.manager.refresh())
-                    .catch(status => assert.equal(status, 400));
+                    .catch(data => assert.deepEqual(data, {
+                        status: 400,
+                        response: fixtureTokenRefresh.error
+                    }));
             });
         });
 

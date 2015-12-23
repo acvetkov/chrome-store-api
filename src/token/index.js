@@ -129,6 +129,6 @@ export default class TokenManager {
         if (_.get(data, 'response.access_token')) {
             return data.response;
         }
-        return Promise.reject(data.status);
+        return Promise.reject(data);
     }
 }

@@ -69,3 +69,20 @@ export function formatResponse(response) {
     }
     return Promise.resolve(result);
 }
+
+/**
+ * Check api errors
+ * @param {Object} data
+ * @returns {*}
+ */
+export function checkResponseErrors(data) {
+    if (data.status > 299 || data.status < 200) {
+        return Promise.reject(data);
+    }
+
+    if (_.size(_.get(data, 'response.itemError')) > 0) {
+        return Promise.reject(data);
+    }
+
+    return data.response;
+}

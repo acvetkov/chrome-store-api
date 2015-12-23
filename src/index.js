@@ -4,5 +4,9 @@
  */
 
 import WebstoreApi from './webstore/index';
+import TokenManager from './token/index';
 
-export default WebstoreApi;
+export default {
+    Webstore: WebstoreApi,
+    TokenManager: TokenManager
+};
