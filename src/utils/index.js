@@ -40,16 +40,6 @@ export function toLog(log, action = '') {
 }
 
 /**
- * Verbose io error and append it it log
- * @param {Function} log
- * @returns {Function}
- */
-export function verboseIOError(log) {
-    return ({response}) => verbose(response)
-        .then(toLog(log));
-}
-
-/**
  * @param {*} data
  * @param {*} [defaultValue]
  * @returns {*}
@@ -67,7 +57,7 @@ export function parseJSON(data, defaultValue) {
  * @param {Object} response
  * @returns {Promise<Object>}
  */
-function verbose(response) {
+export function formatResponse(response) {
     const result = {
         status: response.status
     };

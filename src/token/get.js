@@ -7,7 +7,7 @@ import http from 'q-io/http';
 import debug from 'debug';
 
 import config from '../config/index';
-import {serializeParams, toLog, formatReponse} from '../utils/index';
+import {serializeParams, toLog, formatResponse} from '../utils/index';
 
 const log = debug('token');
 
@@ -34,7 +34,7 @@ export function getToken(code, clientId, clientSecret) {
         url: config.ACCOUNTS_URL,
         body: [body]
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'getToken'));
 }
 
@@ -60,6 +60,6 @@ export function refreshToken(rt, clientId, clientSecret) {
         url: config.ACCOUNTS_URL,
         body: [body]
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'refreshToken'));
 }
