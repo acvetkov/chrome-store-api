@@ -162,7 +162,7 @@ describe('TokenManager', function () {
             });
         });
 
-        describe.only('with storage', function () {
+        describe('with storage', function () {
 
             beforeEach(function () {
                 FakeStorage.data = {};
