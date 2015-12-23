@@ -8,7 +8,7 @@ import debug from 'debug';
 import _ from 'lodash';
 
 import config from '../config/index';
-import {toLog, formatReponse} from '../utils/index';
+import {toLog, formatResponse} from '../utils/index';
 
 const log = debug('webstore:items');
 
@@ -25,7 +25,7 @@ export function get(token, itemId) {
         method: 'GET',
         headers: getHeaders(token)
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'get'));
 }
 
@@ -37,13 +37,13 @@ export function get(token, itemId) {
  * @returns {Promise<ChromeStoreItem>}
  */
 export function insert(token, fileContent) {
-    return http.read({
+    return http.request({
         url: config.API_UPLOAD_URL,
         method: 'POST',
         headers: getHeaders(token),
         body: [fileContent]
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'insert'));
 }
 
@@ -56,13 +56,13 @@ export function insert(token, fileContent) {
  * @returns {Promise<ChromeStoreItem>}
  */
 export function update(token, itemId, fileContent) {
-    return http.read({
+    return http.request({
         url: `${config.API_UPLOAD_URL}${itemId}`,
         method: 'PUT',
         headers: getHeaders(token),
         body: [fileContent]
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'update'));
 }
 
@@ -74,12 +74,12 @@ export function update(token, itemId, fileContent) {
  * @returns {Promise<ChromeStorePublishInfo>}
  */
 export function publish(token, itemId) {
-    return http.read({
+    return http.request({
         method: 'POST',
         url: config.API_PUBLISH_URL.replace('{itemId}', itemId),
         headers: getHeaders(token)
     })
-    .then(formatReponse)
+    .then(formatResponse)
     .then(toLog(log, 'publish'));
 }
 

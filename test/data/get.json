@@ -1,8 +1,4 @@
 {
-  "error": {
-    "status": 404,
-    "response": "Not Found"
-  },
   "ok": {
     "kind": "chromewebstore#item",
     "id": "hdfenecdhmohikghkaainloeemamjiml",
