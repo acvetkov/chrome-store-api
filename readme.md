@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/acvetkov/chrome-store-api.svg?branch=master)](https://travis-ci.org/acvetkov/chrome-store-api)
+
 ## Chrome store api
 
 Chrome webstore [Api](https://developer.chrome.com/webstore/using_webstore_api) for Node.js
