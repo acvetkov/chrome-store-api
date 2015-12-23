@@ -7,7 +7,7 @@ import http from 'q-io/http';
 import debug from 'debug';
 
 import config from '../config/index';
-import {serializeParams, toJSON, toLog, verboseIOError} from '../utils/index';
+import {serializeParams, toLog, formatReponse} from '../utils/index';
 
 const log = debug('token');
 
@@ -26,7 +26,7 @@ export function getToken(code, clientId, clientSecret) {
         redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
     });
 
-    return http.read({
+    return http.request({
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -34,9 +34,8 @@ export function getToken(code, clientId, clientSecret) {
         url: config.ACCOUNTS_URL,
         body: [body]
     })
-    .then(toLog(log, 'getToken'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'getToken'));
 }
 
 /**
@@ -53,7 +52,7 @@ export function refreshToken(rt, clientId, clientSecret) {
         grant_type: 'refresh_token',
         refresh_token: rt
     });
-    return http.read({
+    return http.request({
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -61,7 +60,6 @@ export function refreshToken(rt, clientId, clientSecret) {
         url: config.ACCOUNTS_URL,
         body: [body]
     })
-    .then(toLog(log, 'refreshToken'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'refreshToken'));
 }

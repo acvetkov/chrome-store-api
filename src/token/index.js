@@ -9,6 +9,8 @@ import debug from 'debug';
 import {toLog} from '../utils/index';
 import {getToken, refreshToken} from './get';
 
+import _ from 'lodash';
+
 const log = debug('TokenManager');
 
 export default class TokenManager {
@@ -52,6 +54,7 @@ export default class TokenManager {
         if (this.data.refresh_token) {
             return refreshToken(this.data.refresh_token, this.clientId, this.clientSecret)
                 .then(toLog(log, 'refresh'))
+                .then(data => this._getTokenData(data))
                 .then(data => this.data.access_token = data.access_token)
                 .then(() => this._saveToStorage(this.data))
                 .then(() => this.data.access_token);
@@ -65,12 +68,7 @@ export default class TokenManager {
      */
     _getToken () {
         return this._getFromStorage()
-            .then(token => {
-                if (!token) {
-                    return this._getNewToken();
-                }
-                return token;
-            });
+            .then(token => token || this._getNewToken());
     }
 
     /**
@@ -101,6 +99,7 @@ export default class TokenManager {
         log('get new token');
         return getToken(this.code, this.clientId, this.clientSecret)
             .then(toLog(log))
+            .then(data => this._getTokenData(data))
             .then(data => this.data = data)
             .then(data => this._saveToStorage(data))
             .then(() => this.data.access_token);
@@ -118,5 +117,18 @@ export default class TokenManager {
             return this.storage.set(this.code, data.access_token, data.refresh_token);
         }
         return Promise.resolve();
+    }
+
+    /**
+     * Returns token data
+     * @param {Object} data
+     * @returns {Object|Promise<Number>}
+     * @private
+     */
+    _getTokenData (data) {
+        if (_.get(data, 'response.access_token')) {
+            return data.response;
+        }
+        return Promise.reject(data.status);
     }
 }

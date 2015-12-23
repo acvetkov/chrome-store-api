@@ -6,9 +6,8 @@
 import nock from 'nock';
 
 import {getToken, refreshToken} from '../../src/token/get';
-
-const ACCESS_TOKEN = 'testaccesstoken';
-const REFRESH_TOKEN = 'testrefreshtoken';
+import fixtureTokenGet from '../data/token.get.json';
+import fixtureTokenRefresh from '../data/token.refresh.json';
 
 const GET_BODY = {
     client_id: 'clientId',
@@ -27,6 +26,10 @@ const REFRESH_BODY = {
 
 describe('getToken', function () {
 
+    beforeEach(function () {
+        nock.cleanAll();
+    });
+
     after(function () {
         nock.cleanAll();
     });
@@ -35,52 +38,65 @@ describe('getToken', function () {
 
         nock('https://accounts.google.com')
             .post('/o/oauth2/token', GET_BODY)
-            .reply(200, {
-                access_token: ACCESS_TOKEN,
-                refresh_token: REFRESH_TOKEN
-            });
-
+            .reply(200, fixtureTokenGet.ok);
         return assert.eventually.deepEqual(getToken('code', 'clientId', 'clientSecret'), {
-            access_token: ACCESS_TOKEN,
-            refresh_token: REFRESH_TOKEN
+            status: 200,
+            response: fixtureTokenGet.ok
         });
     });
 
-    it('should be rejected', function () {
-
+    it('should return error for request error', function () {
         nock('https://accounts.google.com')
             .post('/o/oauth2/token', GET_BODY)
-            .replyWithError(500);
+            .reply(400, fixtureTokenGet.error_request);
 
-        return assert.isRejected(getToken('code', 'clientId', 'clientSecret'));
+        return assert.eventually.deepEqual(getToken('code', 'clientId', 'clientSecret'), {
+            status: 400,
+            response: fixtureTokenGet.error_request
+        });
+    });
+
+    it('should return error for invalid code', function () {
+        nock('https://accounts.google.com')
+            .post('/o/oauth2/token', GET_BODY)
+            .reply(400, fixtureTokenGet.error_code);
+
+        return assert.eventually.deepEqual(getToken('code', 'clientId', 'clientSecret'), {
+            status: 400,
+            response: fixtureTokenGet.error_code
+        });
     });
 });
 
 describe('refreshToken', function () {
 
+    beforeEach(function () {
+        nock.cleanAll();
+    });
+
     after(function () {
         nock.cleanAll();
     });
 
-    it('should return token data', function () {
+    it('should return refresh token data', function () {
         nock('https://accounts.google.com')
             .post('/o/oauth2/token', REFRESH_BODY)
-            .reply(200, {
-                access_token: ACCESS_TOKEN,
-                refresh_token: REFRESH_TOKEN
-            });
+            .reply(200, fixtureTokenRefresh.ok);
 
         return assert.eventually.deepEqual(refreshToken('refreshToken', 'clientId', 'clientSecret'), {
-            access_token: ACCESS_TOKEN,
-            refresh_token: REFRESH_TOKEN
+            status: 200,
+            response: fixtureTokenRefresh.ok
         });
     });
 
-    it('should be rejected', function () {
+    it('should return refresh token error', function () {
         nock('https://accounts.google.com')
             .post('/o/oauth2/token', REFRESH_BODY)
-            .replyWithError(500);
+            .reply(400, fixtureTokenRefresh.error);
 
-        return assert.isRejected(refreshToken('refreshToken', 'clientId', 'clientSecret'));
+        return assert.eventually.deepEqual(refreshToken('refreshToken', 'clientId', 'clientSecret'), {
+            status: 400,
+            response: fixtureTokenRefresh.error
+        });
     });
 });
