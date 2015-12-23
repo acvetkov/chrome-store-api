@@ -8,7 +8,7 @@ import debug from 'debug';
 import _ from 'lodash';
 
 import config from '../config/index';
-import {toJSON, toLog, verboseIOError} from '../utils/index';
+import {toLog, formatReponse} from '../utils/index';
 
 const log = debug('webstore:items');
 
@@ -20,14 +20,13 @@ const log = debug('webstore:items');
  * @returns {Promise<ChromeStoreItem>}
  */
 export function get(token, itemId) {
-    return http.read({
+    return http.request({
         url: config.API_GET_URL.replace('{itemId}', itemId),
         method: 'GET',
         headers: getHeaders(token)
     })
-    .then(toLog(log, 'get'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'get'));
 }
 
 /**
@@ -44,9 +43,8 @@ export function insert(token, fileContent) {
         headers: getHeaders(token),
         body: [fileContent]
     })
-    .then(toLog(log, 'insert'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'insert'));
 }
 
 /**
@@ -64,9 +62,8 @@ export function update(token, itemId, fileContent) {
         headers: getHeaders(token),
         body: [fileContent]
     })
-    .then(toLog(log, 'update'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'update'));
 }
 
 /**
@@ -82,9 +79,8 @@ export function publish(token, itemId) {
         url: config.API_PUBLISH_URL.replace('{itemId}', itemId),
         headers: getHeaders(token)
     })
-    .then(toLog(log, 'publish'))
-    .then(toJSON)
-    .catch(verboseIOError(log));
+    .then(formatReponse)
+    .then(toLog(log, 'publish'));
 }
 
 /**
