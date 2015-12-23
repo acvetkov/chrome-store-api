@@ -29,7 +29,7 @@ You can use storage for save token data between sessions.
 ```js
 var WebstoreApi = require('chrome-store-api').Webstore;
 var TokenManager = require('chrome-store-api').TokenManager;
-var FileStorage = require('chrome-store-api/storage');
+var FileStorage = require('chrome-store-api').FileStorage;
 
 var code = 'app-code';
 var clientId = 'your-client-id';
