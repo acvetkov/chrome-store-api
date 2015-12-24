@@ -1,0 +1,11 @@
+{
+  "ok": {
+    "access_token": "ya29.RQJO9PFBWBO4UmxULIUN06k4DaDl6p0oO8h_80z33RqaQh6_ogcR_HA8plDks8YTekwT",
+    "token_type": "Bearer",
+    "expires_in": 3600
+  },
+  "error": {
+    "error": "invalid_request",
+    "error_description": "Required parameter is missing: grant_type"
+  }
+}

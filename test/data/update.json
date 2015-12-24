@@ -1,0 +1,18 @@
+{
+  "ok": {
+    "kind": "chromewebstore#item",
+    "id": "ngdmffdolgegmpahpmflfgnldgdekdon",
+    "uploadState": "SUCCESS"
+  },
+  "error": {
+    "kind": "chromewebstore#item",
+    "id": "ngdmffdolgegmpahpmflfgnldgdekdon",
+    "uploadState": "FAILURE",
+    "itemError": [
+      {
+        "error_code": "PKG_INVALID_ZIP",
+        "error_detail": "Invalid package. Please make sure it is a valid zip file and the file manifest.json is at the root directory of the zip package."
+      }
+    ]
+  }
+}

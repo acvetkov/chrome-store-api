@@ -1,0 +1,9 @@
+{
+  "ok": {
+    "kind": "chromewebstore#item",
+    "id": "hdfenecdhmohikghkaainloeemamjiml",
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoSBb9vXWVmdfiFC1fLxd\nDCr1wI83muwGF9DhSInBmkEpkMh+kLXLvcxTLcrWQTP/newidE0G9kpyR3ygoyTV\njvv7KT9vSvLLMef2KxqG9RCiKUssXKuZAlFS4NdWHhF/sUeZzNTcxzxp6z8BBX8i\nb/ime0fjnt6s/RViZ8TSmPN7rYpeaDnG4LIIagGV0gHDtqar1e52+sdyMq4Yv0qK\nYXOqIZgtdRGAxkDwMqGqEtJ6H5Bje5qXjxq72/8ZSiqbH9k5G0hKB9OAx2BS6tJS\nQwZMyTGrUkYxJjlYOLYOGt2vM4i5b9SYlWBdrQp2XSMY0xLB1BtnLqmpDRVwSo+e\npQIDAQAB\n-----END PUBLIC KEY-----\n",
+    "uploadState": "NOT_FOUND",
+    "crxVersion": "0.0.10"
+  }
+}
