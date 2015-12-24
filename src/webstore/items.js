@@ -1,11 +1,10 @@
 /**
- * @author acvetkov@yandex-team.ru
+ * @author https://github.com/acvetkov
  * @overview
  */
 
 import http from 'q-io/http';
 import debug from 'debug';
-import _ from 'lodash';
 
 import config from '../config/index';
 import {toLog, formatResponse} from '../utils/index';

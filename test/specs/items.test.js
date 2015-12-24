@@ -1,10 +1,9 @@
 /**
- * @author acvetkov@yandex-team.ru
+ * @author https://github.com/acvetkov
  * @overview
  */
 
 import nock from 'nock';
-import _ from 'lodash';
 
 import * as items from '../../src/webstore/items';
 

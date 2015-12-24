@@ -1,5 +1,5 @@
 /**
- * @author acvetkov@yandex-team.ru
+ * @author https://github.com/acvetkov
  * @overview
  */
 

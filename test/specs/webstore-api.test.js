@@ -1,5 +1,5 @@
 /**
- * @author acvetkov@yandex-team.ru
+ * @author https://github.com/acvetkov
  * @overview
  */
 
@@ -9,7 +9,6 @@ import TokenManager from '../../src/token/index';
 import WebstoreApi from '../../src/webstore/index';
 
 import fixtureTokenGet from '../data/token.get.json';
-import fixtureTokenRefresh from '../data/token.refresh.json';
 import fixtureGet from '../data/get.json';
 import fixtureInsert from '../data/insert.json';
 import fixtureUpdate from '../data/update.json';
