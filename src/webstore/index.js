@@ -5,7 +5,7 @@
 
 import debug from 'debug';
 
-import {checkResponseErrors, toLog} from '../utils/index';
+import {checkResponseErrors, toLog, isError} from '../utils/index';
 import * as itemsApi from './items';
 
 const log = debug('api');
@@ -27,6 +27,7 @@ export default class {
     publish (itemId) {
         return this.tokenManager.get()
             .then(token => itemsApi.publish(token, itemId))
+            .then(data => this.retry(data, itemsApi.publish, [itemId]))
             .then(checkResponseErrors)
             .then(toLog(log, 'publish'));
     }
@@ -39,6 +40,7 @@ export default class {
     insert (content) {
         return this.tokenManager.get()
             .then(token => itemsApi.insert(token, content))
+            .then(data => this.retry(data, itemsApi.insert, [content]))
             .then(checkResponseErrors)
             .then(toLog(log, 'insert'));
     }
@@ -52,6 +54,7 @@ export default class {
     update (itemId, content) {
         return this.tokenManager.get()
             .then(token => itemsApi.update(token, itemId, content))
+            .then(data => this.retry(data, itemsApi.update, [itemId, content]))
             .then(checkResponseErrors)
             .then(toLog(log, 'update'));
     }
@@ -64,7 +67,24 @@ export default class {
     get (itemId) {
         return this.tokenManager.get()
             .then(token => itemsApi.get(token, itemId))
+            .then(data => this.retry(data, itemsApi.get, [itemId]))
             .then(checkResponseErrors)
             .then(toLog(log, 'get'));
+    }
+
+    /**
+     * Refresh token and retry
+     * @param {Object} data
+     * @param {Function} itemApiMethod
+     * @param {Array} args
+     */
+    retry (data, itemApiMethod, args) {
+        if (isError(data) && data.status === 401) {
+            return this.tokenManager.refresh()
+                .then(token => {
+                    return itemApiMethod.apply(itemsApi, [token, ...args]);
+                });
+        }
+        return data;
     }
 }
