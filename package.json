@@ -1,6 +1,6 @@
 {
   "name": "chrome-store-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Chrome webstore API",
   "main": "out/index.js",
   "repository": {
