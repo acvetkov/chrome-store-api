@@ -29,6 +29,20 @@ const GET_BODY = {
     redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
 };
 
+const REFRESH_BODY = {
+    client_id: 'client_id',
+    client_secret: 'client_secret',
+    grant_type: 'refresh_token',
+    refresh_token: '1/IPM_hwoL8eVDCuNaVh6PZvObENFrMlZsvUZj8JK7Lc0'
+};
+
+const refreshTokenFixture = {
+    access_token: 'ya29.RQLq6tgOfG1UQ_gDe0IZNJ3fJiufaPcumcXn8L_qQf5XwOZJl8Zk0VgSan_GcbMFm0Wz',
+    token_type: 'Bearer',
+    expires_in: 3600,
+    refresh_token: '1/IPM_hwoL8eVDCuNaVh6PZvObENFrMlZsvUZj8JK7Lc0'
+};
+
 describe('webstore', function () {
 
     describe('get', function () {
@@ -70,10 +84,15 @@ describe('webstore', function () {
         it('should reject with 401 for get request', function () {
             nock('https://accounts.google.com')
                 .post('/o/oauth2/token', GET_BODY)
+                .reply(200, fixtureTokenGet.ok)
+                .post('/o/oauth2/token', REFRESH_BODY)
+                .reply(200, refreshTokenFixture)
+                .post('/o/oauth2/token', GET_BODY)
                 .reply(200, fixtureTokenGet.ok);
 
             nock('https://www.googleapis.com')
                 .get(`/chromewebstore/v1.1/items/${ITEM_ID}?projection=draft`)
+                .times(2)
                 .reply(401, fixture401);
 
             return this.api.get(ITEM_ID)
@@ -95,10 +114,15 @@ describe('webstore', function () {
         it('should resolve with item info', function () {
             nock('https://accounts.google.com')
                 .post('/o/oauth2/token', GET_BODY)
+                .reply(200, fixtureTokenGet.ok)
+                .post('/o/oauth2/token', REFRESH_BODY)
+                .reply(200, refreshTokenFixture)
+                .post('/o/oauth2/token', GET_BODY)
                 .reply(200, fixtureTokenGet.ok);
 
             nock('https://www.googleapis.com')
                 .post(`/upload/chromewebstore/v1.1/items/`)
+                .times(2)
                 .reply(200, fixtureInsert.ok);
 
             return assert.eventually.deepEqual(this.api.insert(''), fixtureInsert.ok);
@@ -132,10 +156,15 @@ describe('webstore', function () {
         it('should reject with 401 for insert request', function () {
             nock('https://accounts.google.com')
                 .post('/o/oauth2/token', GET_BODY)
+                .reply(200, fixtureTokenGet.ok)
+                .post('/o/oauth2/token', REFRESH_BODY)
+                .reply(200, refreshTokenFixture)
+                .post('/o/oauth2/token', GET_BODY)
                 .reply(200, fixtureTokenGet.ok);
 
             nock('https://www.googleapis.com')
                 .post(`/upload/chromewebstore/v1.1/items/`)
+                .times(2)
                 .reply(401, fixture401);
 
             return this.api.insert('')

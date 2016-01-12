@@ -76,13 +76,17 @@ export function formatResponse(response) {
  * @returns {*}
  */
 export function checkResponseErrors(data) {
-    if (data.status > 299 || data.status < 200) {
+    if (isError(data)) {
         return Promise.reject(data);
     }
-
-    if (_.size(_.get(data, 'response.itemError')) > 0) {
-        return Promise.reject(data);
-    }
-
     return data.response;
+}
+
+/**
+ * Check api method error
+ * @param {Object} data
+ * @returns {boolean}
+ */
+export function isError(data) {
+    return data.status > 299 || data.status < 200 || _.size(_.get(data, 'response.itemError')) > 0;
 }
