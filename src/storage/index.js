@@ -69,7 +69,8 @@ export default class FileStorage {
             if (exists) {
                 return fs.read(this.file);
             }
-            return Promise.resolve({});
+            return this.dump()
+                .then(() => this.data);
         }).then(data => {
             this.inited = true;
             this.data = parseJSON(data, {});
