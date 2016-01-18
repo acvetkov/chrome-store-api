@@ -1,6 +1,6 @@
 {
   "name": "chrome-store-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Chrome webstore API",
   "main": "out/index.js",
   "repository": {
@@ -27,6 +27,7 @@
     "bluebird": "^3.0.6",
     "debug": "^2.2.0",
     "lodash": "^3.10.1",
+    "mkdirp": "^0.5.1",
     "q": "^1.4.1",
     "q-io": "^1.13.1"
   },
