@@ -4,9 +4,13 @@
  */
 
 import fs from 'q-io/fs';
+import path from 'path';
+import mkdirp from 'mkdirp';
 import Promise from 'bluebird';
 
 import {parseJSON} from '../utils/index';
+
+const makeDirectory = Promise.promisify(mkdirp);
 
 /**
  * @implements {IStorage}
@@ -55,7 +59,14 @@ export default class FileStorage {
      * @returns {Promise<TokenData>}
      */
     dump () {
-        return fs.write(this.file, JSON.stringify(this.data));
+        return fs.exists(this.file)
+            .then(exists => {
+                if (!exists) {
+                    return makeDirectory(path.dirname(this.file));
+                }
+                return Promise.resolve();
+            })
+            .then(() => fs.write(this.file, JSON.stringify(this.data)));
     }
 
     /**
@@ -69,8 +80,7 @@ export default class FileStorage {
             if (exists) {
                 return fs.read(this.file);
             }
-            return this.dump()
-                .then(() => this.data);
+            return Promise.resolve({});
         }).then(data => {
             this.inited = true;
             this.data = parseJSON(data, {});

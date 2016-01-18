@@ -7,7 +7,7 @@ import FileStorage from '../../src/storage/index';
 import fs from 'q-io/fs';
 import path from 'path';
 
-const NEW_FILE = path.resolve(__dirname, './data.json');
+const NEW_FILE = path.resolve(__dirname, '../temp-directory/data.json');
 const EXISTING_FILE = path.resolve(__dirname, '../data/fake-storage.json');
 
 describe('file-storage', function () {
@@ -18,6 +18,9 @@ describe('file-storage', function () {
                 if (exists) {
                     return fs.remove(NEW_FILE);
                 }
+            })
+            .then(() => {
+                return fs.removeDirectory(path.dirname(NEW_FILE));
             });
     });
 
