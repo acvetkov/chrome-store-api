@@ -70,12 +70,14 @@ export function update(token, itemId, fileContent) {
  * publishTarget = "trustedTesters" or publishTarget = "default".
  * @param {String} token
  * @param {String} itemId
+ * @param {String} target
  * @returns {Promise<ChromeStorePublishInfo>}
  */
-export function publish(token, itemId) {
+export function publish(token, itemId, target) {
     return http.request({
         method: 'POST',
-        url: config.API_PUBLISH_URL.replace('{itemId}', itemId),
+        url: config.API_PUBLISH_URL.replace('{itemId}', itemId)
+            + (target === 'trusted' ? '?publishTarget=trustedTesters' : ''),
         headers: getHeaders(token)
     })
     .then(formatResponse)
@@ -90,6 +92,6 @@ export function publish(token, itemId) {
 function getHeaders(token) {
     return {
         Authorization: `Bearer ${token}`,
-        'x-goog-api-version': 2
+        'x-goog-api-version': 2,
     };
 }

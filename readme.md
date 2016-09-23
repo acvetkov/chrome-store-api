@@ -101,3 +101,15 @@ api.publish('extension-id')
       console.log(err);
    });
 ```
+
+### publish for trusted users only
+
+```js
+api.publish('extension-id', 'trusted')
+   .then(function (data) {
+      console.log(data);
+   })
+   .catch(function (err) {
+      console.log(err);
+   });
+```
