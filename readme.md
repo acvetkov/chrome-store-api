@@ -102,7 +102,7 @@ api.publish('extension-id')
    });
 ```
 
-### publish for trusted users only
+#### publish for trusted users only
 
 ```js
 api.publish('extension-id', 'trusted')
