@@ -22,11 +22,12 @@ export default class {
     /**
      * Publish item in chrome web store
      * @param {String} itemId
+     * @param {String} target either undefined | default | trusted
      * @returns {Promise<ChromeStorePublishInfo>}
      */
-    publish (itemId) {
+    publish (itemId, target) {
         return this.tokenManager.get()
-            .then(token => itemsApi.publish(token, itemId))
+            .then(token => itemsApi.publish(token, itemId, target))
             .then(data => this.retry(data, itemsApi.publish, [itemId]))
             .then(checkResponseErrors)
             .then(toLog(log, 'publish'));

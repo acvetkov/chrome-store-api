@@ -257,6 +257,18 @@ describe('webstore', function () {
             return assert.eventually.deepEqual(this.api.publish(ITEM_ID), fixturePublish.ok);
         });
 
+        it('should publish to trusted users', function () {
+            nock('https://accounts.google.com')
+                .post('/o/oauth2/token', GET_BODY)
+                .reply(200, fixtureTokenGet.ok);
+
+            nock('https://www.googleapis.com')
+                .post(`/chromewebstore/v1.1/items/${ITEM_ID}/publish?publishTarget=trustedTesters`)
+                .reply(200, fixturePublish.ok);
+
+            return assert.eventually.deepEqual(this.api.publish(ITEM_ID, 'trusted'), fixturePublish.ok);
+        });
+
         it('should reject with 401', function () {
             nock('https://accounts.google.com')
                 .post('/o/oauth2/token', GET_BODY)
