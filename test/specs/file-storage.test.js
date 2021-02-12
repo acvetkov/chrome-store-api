@@ -4,7 +4,7 @@
  */
 
 import FileStorage from '../../src/storage/index';
-import fs from 'q-io/fs';
+import fs from '@hypnosphi/q-io/fs';
 import path from 'path';
 
 const NEW_FILE = path.resolve(__dirname, '../temp-directory/data.json');

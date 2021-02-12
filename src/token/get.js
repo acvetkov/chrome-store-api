@@ -3,7 +3,7 @@
  * @overview
  */
 
-import http from 'q-io/http';
+import http from '@hypnosphi/q-io/http';
 import debug from 'debug';
 
 import config from '../config/index';
