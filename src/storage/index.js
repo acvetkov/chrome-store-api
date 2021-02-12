@@ -3,7 +3,7 @@
  * @overview
  */
 
-import fs from 'q-io/fs';
+import fs from '@hypnosphi/q-io/fs';
 import path from 'path';
 import mkdirp from 'mkdirp';
 import Promise from 'bluebird';

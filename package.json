@@ -24,12 +24,12 @@
   "author": "Aleksey Tsvetkov <aleksey.dmitrich@gmail.com> (https://github.com/acvetkov)",
   "license": "ISC",
   "dependencies": {
+    "@hypnosphi/q-io": "^1.13.1",
     "bluebird": "^3.0.6",
     "debug": "^2.2.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.20",
     "mkdirp": "^0.5.1",
-    "q": "^1.4.1",
-    "q-io": "^1.13.1"
+    "q": "^1.4.1"
   },
   "devDependencies": {
     "babel": "^5.8.34",
